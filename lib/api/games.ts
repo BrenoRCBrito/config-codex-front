@@ -1,7 +1,14 @@
 // API functions for games and configs
 
 import { apiClient } from './client';
-import type { Game, GameConfig, GetConfigsParams, PaginatedResponse } from '../types/api';
+import type {
+  Game,
+  GameConfig,
+  GameConfigFileContent,
+  GameConfigFileVersion,
+  GetConfigsParams,
+  PaginatedResponse,
+} from '../types/api';
 
 export const gamesApi = {
   // Get all games
@@ -16,4 +23,16 @@ export const gamesApi = {
   // Get all configs with pagination
   getConfigs: (params?: GetConfigsParams) =>
     apiClient.get<PaginatedResponse<GameConfig>>('/games/config', params),
+
+  // Get single config by ID
+  getConfigById: (configId: string) =>
+    apiClient.get<GameConfig>(`/games/config/${configId}/`),
+
+  // Get all versions for a config
+  getConfigVersions: (configId: string) =>
+    apiClient.get<GameConfigFileVersion[]>(`/games/config/${configId}/versions`),
+
+  // Get file content for a specific version
+  getVersionContent: (versionId: string) =>
+    apiClient.get<GameConfigFileContent>(`/games/config/version/${versionId}/content`),
 };

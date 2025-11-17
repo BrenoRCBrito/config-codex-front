@@ -1,5 +1,6 @@
 import { Card, Group, Text, Badge, Stack, ActionIcon, Box } from '@mantine/core';
 import { IconDownload, IconClock, IconCalendar, IconFileText } from '@tabler/icons-react';
+import { useRouter } from 'next/router';
 import type { GameConfig } from '@/lib/types/api';
 
 interface ConfigCardProps {
@@ -7,6 +8,7 @@ interface ConfigCardProps {
 }
 
 export function ConfigCard({ config }: ConfigCardProps) {
+  const router = useRouter();
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -21,6 +23,10 @@ export function ConfigCard({ config }: ConfigCardProps) {
     return `${(sizeInBytes / (1024 * 1024)).toFixed(2)} MB`;
   };
 
+  const handleCardClick = () => {
+    router.push(`/config/${config.id}`);
+  };
+
   return (
     <Card
       shadow="sm"
@@ -28,6 +34,7 @@ export function ConfigCard({ config }: ConfigCardProps) {
       radius="md"
       withBorder
       style={{ height: '100%', cursor: 'pointer' }}
+      onClick={handleCardClick}
     >
       <Stack gap="md">
         {/* Config Name */}

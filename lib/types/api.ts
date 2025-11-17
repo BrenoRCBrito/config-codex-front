@@ -16,6 +16,7 @@ export interface GameConfigFileVersion {
   created: string;
   modified: string;
   deleted: string | null;
+  config?: GameConfig; // Optional - included when fetching versions list
 }
 
 export interface GameConfig {
@@ -32,6 +33,13 @@ export interface GameConfig {
 export interface PaginatedResponse<T> {
   items: T[];
   count: number;
+}
+
+// File Content Response
+export interface GameConfigFileContent {
+  filename: string;
+  size: number;
+  content: string;
 }
 
 // API Request Types
